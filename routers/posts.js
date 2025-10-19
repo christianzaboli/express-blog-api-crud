@@ -2,44 +2,25 @@
 const express = require('express');
 const router = express.Router();
 
-const posts = require('../data/postsList')
+// const posts = require('../data/postsList');
+const postsController = require('../controllers/postsController.jsx')
 
 // index
-router.get('/', function (req, res) {
-  let filteredPosts = posts;
-
-  if (req.query.tags) {
-    filteredPosts = filteredPosts.filter(post => post.tags.find(tag => tag === req.query.tags))
-  }
-  res.json(filteredPosts);
-})
+router.get('/', postsController.index)
 
 // show
-router.get('/:id', function (req, res) {
-  res.json(posts.find(post => post.id === parseInt(req.params.id)) ??
-    (res.status(404), res.json({ error: 'Not Found', message: 'Post not found' })));
-})
+router.get('/:id', postsController.show)
 
 // post
-router.post('/', function (req, res) {
-  res.send('Create new post')
-})
+router.post('/', postsController.post)
 
 // update
-router.put('/:id', function (req, res) {
-  res.send('Overhaul mod of the post n.' + req.params.id)
-})
+router.put('/:id', postsController.update)
 
 // patch
-router.patch('/:id', function (req, res) {
-  res.send('Partial mod of the post n.' + req.params.id)
-})
+router.patch('/:id', postsController.patch)
 
 // delete
-router.delete('/:id', function (req, res) {
-  posts.splice(posts.indexOf(posts.find(post => post.id === parseInt(req.params.id))), 1);
-  console.log(posts);
-  res.sendStatus(204)
-})
+router.delete('/:id', postsController.destroy)
 
 module.exports = router;
