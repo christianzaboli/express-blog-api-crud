@@ -37,7 +37,9 @@ router.patch('/:id', function (req, res) {
 
 // delete
 router.delete('/:id', function (req, res) {
-  res.send('deSTROYINGGG post n.' + req.params.id)
+  posts.splice(posts.indexOf(posts.find(post => post.id === parseInt(req.params.id))), 1);
+  console.log(posts);
+  res.sendStatus(204)
 })
 
 module.exports = router;
