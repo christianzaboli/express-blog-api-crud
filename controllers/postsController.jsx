@@ -4,7 +4,7 @@ const posts = require('../data/postsList');
 function index(req, res) {
     let filteredPosts = posts;
 
-    if (req.query.tags) {
+    if (req.query.tags) { // condizione che si avvera solo nel caso compaia una query 'tags'
         filteredPosts = filteredPosts.filter(post => post.tags.find(tag => tag === req.query.tags))
     }
     res.json(filteredPosts);
@@ -12,7 +12,7 @@ function index(req, res) {
 
 // show
 function show(req, res) {
-    res.json(posts.find(post => post.id === parseInt(req.params.id)) ??
+    res.json(posts.find(post => post.id === parseInt(req.params.id)) ?? // versione ridotta senza check della funzione destroy, se é veritiera restituisce a sinistra, mentre falso a destra grazie al nullish
         (res.status(404), res.json({ error: 'Not Found', message: 'Post not found' })));
 }
 
@@ -33,9 +33,15 @@ function patch(req, res) {
 
 // delete
 function destroy(req, res) {
-    posts.splice(posts.indexOf(posts.find(post => post.id === parseInt(req.params.id))), 1);
-    console.log(posts);
-    res.sendStatus(204)
+    if (posts.find(post => post.id === parseInt(req.params.id))) {  // controllo se il post richiesto esiste
+        posts.splice(posts.indexOf(posts.find(post => post.id === parseInt(req.params.id))), 1) ??  // eliminito tale post nel caso esista
+            console.log(posts);
+        res.sendStatus(204)
+    } else {
+        res.status(404), // restituisco un json di not found nel caso opposto
+            res.json({ error: 'Not Found', message: 'Post not found' })
+
+    }
 }
 
 module.exports = { index, show, post, update, patch, destroy } 
