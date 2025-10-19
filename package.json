@@ -1,7 +1,7 @@
 {
-  "name": "express-blog-intro",
+  "name": "express-blog-api-crud",
   "version": "1.0.0",
-  "description": "express excercise involving th use of routing",
+  "description": "express excercise involving the use of routing + controllers",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
