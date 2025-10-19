@@ -1,0 +1,22 @@
+{
+  "name": "express-blog-intro",
+  "version": "1.0.0",
+  "description": "express excercise involving th use of routing",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "watch": "node --watch app.js"
+  },
+  "keywords": [
+    "express",
+    "boolean",
+    "npm",
+    "blog"
+  ],
+  "author": "Christian Zaboli Vedovi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
