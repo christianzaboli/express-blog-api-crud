@@ -2,6 +2,10 @@ const posts = require('../data/postsList');
 
 // index
 function index(req, res) {
+
+    //random function per testare il middleware errorsHandler
+    testMiddleware.get();
+
     let filteredPosts = posts;
 
     if (req.query.tags) { // condizione che si avvera solo nel caso compaia una query 'tags'

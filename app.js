@@ -9,6 +9,10 @@ app.use(express.static('public'));
 // faccio si che il server faccia il parse delle informazioni in formato json
 app.use(express.json())
 
+// importo i middlewares
+const errorsHandler = require('./middlewares/errorsHandler')
+const notFound = require('./middlewares/notFound')
+
 const postsRouter = require('./routers/posts')
 
 // imposto l'indice del server
@@ -18,6 +22,9 @@ app.get('/', (req, res) => (
 
 app.use('/posts', postsRouter)
 
+// attivo i middlewares importati
+app.use(errorsHandler);
+app.use(notFound);
 
 // metto in ascolto il server sulla porta scelta in precedenza
 app.listen(port, () => {
