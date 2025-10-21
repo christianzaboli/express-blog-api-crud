@@ -18,7 +18,19 @@ function show(req, res) {
 
 // post
 function post(req, res) {
-    res.send('Create new post')
+    const newPost = {
+        id: posts[posts.length - 1].id + 1,
+        title: req.body.title,
+        content: req.body.content,
+        image: req.body.image,
+        tags: req.body.tags,
+    }
+
+    posts.push(newPost);
+    console.log(posts);
+
+    res.status(201);
+    res.json(newPost)
 }
 
 // update
