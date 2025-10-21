@@ -23,19 +23,50 @@ function post(req, res) {
 
 // update
 function update(req, res) {
-    res.send('Overhaul mod of the post n.' + req.params.id)
+    const id = parseInt(req.params.id);
+    const post = posts.find(post => post.id === id);
+
+    if (!post) {    // caso di nessun post trovato
+        res.status(404);
+        return res.json({ error: 'Not Found', message: 'Post not found' })
+    }
+
+    // sostituisco le proprieta di tale post con quelle inserite all'api
+    post.title = req.body.title
+    post.content = req.body.content
+    post.image = req.body.image
+    post.tags = req.body.tags
+
+    console.log(posts);
+    res.json(post)
 }
 
 // patch
 function patch(req, res) {
-    res.send('Partial mod of the post n.' + req.params.id)
+    const id = parseInt(req.params.id);
+    const post = posts.find(post => post.id === id);
+
+    if (!post) {    // caso di nessun post trovato
+        res.status(404);
+        return res.json({ error: 'Not Found', message: 'Post not found' })
+    }
+
+    // checko tutte le nuove proprieta se esistono, e se si rimpiazzano quelle di prima
+    req.body.title ? post.title = req.body.title : post.title = post.title;
+    req.body.content ? post.content = req.body.content : post.content = post.content;
+    req.body.image ? post.image = req.body.image : post.image = post.image;
+    req.body.tags ? post.tags = req.body.tags : post.tags = post.tags;
+
+    console.log(posts);
+    res.json(post)
+
 }
 
 // delete
 function destroy(req, res) {
     if (posts.find(post => post.id === parseInt(req.params.id))) {  // controllo se il post richiesto esiste
-        posts.splice(posts.indexOf(posts.find(post => post.id === parseInt(req.params.id))), 1) ??  // eliminito tale post nel caso esista
-            console.log(posts);
+        posts.splice(posts.indexOf(posts.find(post => post.id === parseInt(req.params.id))), 1);  // eliminito tale post nel caso esista
+        console.log(posts);
         res.sendStatus(204)
     } else {
         res.status(404), // restituisco un json di not found nel caso opposto

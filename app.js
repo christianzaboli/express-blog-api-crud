@@ -6,7 +6,8 @@ const app = express();
 const port = 3000;
 // rendo disponibile l'uso dei file nella cartella public
 app.use(express.static('public'));
-
+// faccio si che il server faccia il parse delle informazioni in formato json
+app.use(express.json())
 
 const postsRouter = require('./routers/posts')
 
